@@ -1,8 +1,3 @@
-.theme-examples {
-  display: flex;
-  flex-direction: row;
-}
-
 # The Cinna Key Manger v1.0
 
 This key manager is designed for the user to store their keys and passcodes offline. Using a blazingly fast backend 🦀 and very responsive front-end ⚛️, this is great for those who are looking for an offline solution.
