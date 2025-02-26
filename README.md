@@ -15,11 +15,12 @@ This key manager is designed for the user to store their keys and passcodes offl
 <img src=https://github.com/user-attachments/assets/5120d974-406e-4fe0-ad61-dd02a4aa65ac/ width=300px/>
 <br/>
 - You can also swap themes if you are tired of the same look. Dark and Light theme are shown below.
+<br/>
 <img src=https://github.com/user-attachments/assets/b48623d1-d33a-4fbc-8e6c-6d6cf659ce61 width=250px/> <img src=https://github.com/user-attachments/assets/fba197d6-961e-44d2-b170-f3e078874dca width=250px/>
 
 # Development 
 
-This was made with Rust's Tauri desktop container and rust backend and React for the UI and native CSS.
+This was made with Rust's Tauri desktop container and rust backend and React for the UI and native CSS. 
 
 <!--Developer's comments-->
 <!---I had fun making this app. Getting used to Rust's syntax was challenging, but it was fun and perfomant in the end. Updates will be pushed in the future!:) -->
