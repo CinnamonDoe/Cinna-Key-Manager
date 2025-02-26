@@ -1,0 +1,245 @@
+#root {
+  display: flex;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  background-color: transparent;
+}
+
+.epic-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  justify-content: start;
+  display: flex;
+}
+
+.nav-bttn {
+  background-color: transparent;
+  max-height: 40px;
+  padding: 10px;
+  border-radius: 0;
+}
+
+.pass-app {
+  display: flex;
+  flex-direction: column;
+  max-width: 700px;
+}
+
+.header-content {
+  display: flex;
+  min-width: 250px;
+  justify-content: space-between;
+  max-height: 40px;
+  align-items: center;
+}
+
+
+.filter-select {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex-basis: 180px;
+  max-width: 180px;
+}
+
+.filter-options {
+  appearance: none;
+  display: flex;
+  flex-direction: column;
+  border: none;
+  text-align: center;
+  font-size: 1em;
+  font-weight: 700;
+  display: flex;
+  position: absolute;
+  background-color: azure;
+  width: fit-content;
+  padding: 1px 0px;
+  z-index: 1;
+}
+
+.select-button {
+  background-color: transparent;
+  align-items: center;
+  align-content: center;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 0;
+  width: 100%;
+}
+
+.filter-options {
+  border: none;
+  border-color: transparent;
+}
+ 
+.filter-options > p {
+  cursor:pointer;
+  padding: 10px 0px;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.filter-options > p:hover {
+  background-color: rgb(222, 221, 230);
+}
+
+.password-table {
+  display: flex;
+  margin-top: 20px;
+  flex-direction: column;
+  position: relative;
+}
+
+.passes {
+  margin-top: 10px;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+
+.delete {
+  background-color: #ce3340;
+  color:#5c020e
+}
+
+.pass-card {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  background-color:#cbafd6;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+  max-width: 700px;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  padding: 10px;
+  margin: 10px;
+  gap: 10px
+}
+
+.details {
+  margin: 10px;
+  display: flex;
+  padding: 10px;
+  position: relative;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.password {
+  user-select: none;
+}
+
+.hidden {
+  color: transparent;
+  text-shadow: 0px 0px 6px white;
+}
+
+.add-modal {
+  position: fixed;
+  display: flex;
+  border-radius: 10px;
+  flex-direction: column;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: 99;
+  background-color: #f3f8f8;
+  min-width: 200px;
+  width: fit-content;
+  height: fit-content;
+  justify-content: center;
+  gap: 10px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.generate {
+  padding: 2px;
+  display: inline-block;
+}
+
+.add {
+  background-color: rgb(64, 216, 236);
+}
+
+.modal-bg {
+  background-color: #00000081;
+  position: fixed;
+  justify-self: center;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  left: 0;
+  top: 0;
+  z-index: 2;
+}
+
+.themes-list {
+  background-color: #f0f8ff;
+  padding: 10px 2px;
+  position: absolute;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  align-content: center;
+  z-index: 9;
+  align-items: center;
+}
+
+.themes-list, .filter-options{
+  filter: drop-shadow(5px 5px 2px rgba(0, 0, 0, 0.24));
+}
+.theme-list > li {
+  justify-self: center;
+  justify-items: center;
+}
+
+.version {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 5px;
+  display: block;
+}
+
+@media screen and (max-width: 500px) {
+  .details {
+    display: inline-flex;
+  }
+}
+
+@media screen and (min-width: 800px) {
+    .pass-card {
+      flex-direction: row;
+      justify-content: center;
+    }
+
+    .action-buttons {
+      width: 100%;
+    }
+}
