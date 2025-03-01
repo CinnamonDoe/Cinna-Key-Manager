@@ -2,21 +2,22 @@ import { useState, Suspense, useEffect, useLayoutEffect, createContext, useCallb
 import './App.css'
 
 import { invoke } from '@tauri-apps/api/core';
-import DataDetail from './components/DataDetail';
+import DataDetail from './components/DataCard/DataDetail';
 import AddForm from './components/AddForm';
 import { GiBigGear } from 'react-icons/gi';
 import Import from './components/Import';
 import Export from './components/Export';
-import NavBarMenu from './components/NavBarMenu';
-import ChangeTheme from './components/ChangeTheme';
+import NavBarMenu from './components/NavBar/NavBarMenu';
+import ChangeTheme from './components/NavBar/ChangeTheme';
 
 import { readTextFile, BaseDirectory } from '@tauri-apps/plugin-fs';
 
-import themes from './themes.json';
+import themes from '././assets/themes.json';
 import Clock from './components/Clock';
 import { BiCaretDown } from 'react-icons/bi';
 
-interface PassData {
+// data for the passwords.
+export interface PassData {
   id: number,
   username: string,
   url: string,
@@ -38,6 +39,12 @@ interface Theme {
   themeButtonText: string
 }
 
+
+export const getDataTest = async () => {
+  await invoke('fetchdata').then((res) => {return res as PassData[]});
+}
+
+// context for themes to be applied to all components.
 export const ThemesContext = createContext<Theme>(themes.themes[0]); // light theme by default.
 
 function App() {
@@ -46,19 +53,25 @@ function App() {
   const [viewModal, setModal] = useState(false);
   const [editMode, setEdit] = useState(false);
   const [theme, setTheme] = useState<Theme>(themes.themes[0]);
-  const [filter, setFilter] = useState("all");
-  const [filterText, setFilterText] = useState("All");
+
+
+  const [filter, setFilter] = useState("all"); // sets the filter
+  const [filterText, setFilterText] = useState("All"); // sets the text for the button for custom select element.
+
+  // Toggle viewing for filter options
   const [select, viewSelect] = useState(false);
 
+  // Refs to position dropdown/ select for filters.
   const filtersRef = useRef<HTMLElement>(null);
   const filterDrop = useRef<HTMLButtonElement>(null);
 
   const loadTheme = async () => {
     const contents = await readTextFile("preferredtheme.set", {baseDir: BaseDirectory.AppLocalData});
-    const index = themes.themes.findIndex((t) => t.name === contents)
-    setTheme(themes.themes[index])
+    const index = themes.themes.findIndex((t) => t.name === contents);
+    setTheme(themes.themes[index]);
   }
   
+  // Toggle edit mode to delete passwords.
   const setEditMode = () => {
     setEdit(!editMode);
   }
@@ -66,7 +79,8 @@ function App() {
   const getData = useCallback(async () => {
     await invoke('fetchdata').then((res) => setPasses(res as PassData[]));
 
-  }, [])
+  }, []);
+
 
   const getFilter = (filter: string) => {
     setFilter(filter);
@@ -74,6 +88,7 @@ function App() {
   } 
 
   useEffect(() => {
+    // targets the buttons within the action buttons container and apply the custom theme.
     document.querySelector(".actions")?.querySelectorAll("button").forEach((bttn) => {
       bttn.addEventListener("mouseenter", () => {
         bttn.style.backgroundColor = theme.actionButtonHover
@@ -101,11 +116,8 @@ function App() {
   }, [theme.textColor, filter, passes, getData])
 
       if(filtersRef.current && filterDrop.current) {
-        filtersRef.current.style.top = `${filterDrop.current.getBoundingClientRect().top - 10}px`;
+        filtersRef.current.style.top = `${filterDrop.current.getBoundingClientRect().top - 10}px`; // shows underneath the button as dropdown.
         filtersRef.current.style.width = `${filterDrop.current.getBoundingClientRect().width}px`;
-        filtersRef.current.addEventListener("blur", () => {
-          viewSelect(false);
-        })
     }
 
  

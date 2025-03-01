@@ -7,6 +7,12 @@ interface props {
   setModal: Dispatch<SetStateAction<boolean>>,
 }
 
+export interface PasswordDTO {
+  username: string,
+  password: string,
+  url: string,
+  favorite: number
+}
 
 export default function AddForm({viewModal, setModal}: props) {
 
@@ -19,10 +25,10 @@ export default function AddForm({viewModal, setModal}: props) {
   const passRef = useRef<HTMLInputElement>(null);
   const submit = useRef<HTMLButtonElement>(null);
 
-  const data = {username: username, password: password, url: url, favorite: favorite};
+  const data: PasswordDTO = {username: username, password: password, url: url, favorite: favorite};
 
-  const submitPW = () => {
-    if(username === "" || password === "" || url=== ""){
+  const submitPW = (data: PasswordDTO) => {
+    if(data.username === "" || data.password === "" || data.url=== ""){
       console.log("Can't do that!");
     }
     invoke('add_pw', {data: data});
@@ -44,7 +50,7 @@ export default function AddForm({viewModal, setModal}: props) {
       setPass(result);
       passRef.current.addEventListener("focus", () => {
         if(passRef.current?.type === "password"){
-          passRef.current.type = "text"
+          passRef.current.type = "text";
         }
       })
     }
@@ -63,11 +69,11 @@ export default function AddForm({viewModal, setModal}: props) {
       <div style={{display: !viewModal ? "none" : "flex"}}>
         <section className='add-modal' style={{backgroundColor: theme.background}}>
           <h3>Add a new Password</h3>
-          <input type="text" placeholder='username' name="" id="" onChange={(e) => setUserName(e.currentTarget.value)}/>
-          <input ref={passRef} type="password" placeholder='password' name="" id="" onChange={(e) => setPass(e.currentTarget.value)}/>
-          <button onClick={() => generatePW(8)}>Generate</button>
-          <input type="text" placeholder='url' name="" id="" onChange={(e) => setUrl(e.currentTarget.value)}/>
-          <button ref={submit} className='add form-bttn' type="button" onClick={submitPW}>Add</button>
+          <input data-testid="username" type="text" placeholder='username' name="username" id="" onChange={(e) => setUserName(e.currentTarget.value)}/>
+          <input data-testid="password" ref={passRef} type="password" placeholder='password' name="password" id="" onChange={(e) => setPass(e.currentTarget.value)}/>
+          <button onClick={() => generatePW(12)}>Generate</button>
+          <input data-testid="url" type="text" placeholder='url' name="url" id="" onChange={(e) => setUrl(e.currentTarget.value)}/>
+          <button name="submit-new" ref={submit} className='add form-bttn' type="button" onClick={() => submitPW(data)}>Add</button>
         </section>
         <div className='modal-bg' onClick={() => setModal(false)}></div>
       </div>

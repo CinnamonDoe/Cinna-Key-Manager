@@ -1,5 +1,5 @@
 import React, { useContext, useLayoutEffect } from 'react'
-import { ThemesContext } from '../App'
+import { ThemesContext } from '../../App'
 
 interface props {
     children?: React.ReactNode

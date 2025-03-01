@@ -3,7 +3,7 @@ import { ask } from '@tauri-apps/plugin-dialog'
 import React, { useContext, useRef, useState } from 'react'
 import { BiShow, BiHide, BiStar, BiLink, BiCheck } from 'react-icons/bi'
 import { GiPaperBagCrumpled } from 'react-icons/gi'
-import { ThemesContext } from '../App'
+import { ThemesContext } from '../../App'
 
 interface props {
     id: number,
@@ -13,6 +13,18 @@ interface props {
     favorite: number
     key: React.Key,
     editMode: boolean
+}
+
+export const deletePass = async (id: number) => {
+    const answer = await ask('Are you sure you want to delete this password? This action cannot be undone.', {title: "Delete Password", kind: "warning"});
+    try {
+        if(answer == true){
+            await invoke("delete_pw", {id: id});
+            return "password has deleted successfully!";
+        }
+    } catch(e) {
+        console.log("Something went wrong: " + e)
+    }
 }
 
 export default function DataDetail({id, username, url, password, favorite, editMode}: props) {
@@ -36,20 +48,9 @@ export default function DataDetail({id, username, url, password, favorite, editM
         await invoke("favorite_pw", {fave: fave, id: id});
     }
 
-    const deletePass = async () => {
-        const answer = await ask('Are you sure you want to delete this password? This action cannot be undone.', {title: "Delete Password", kind: "warning"});
+    const copyPass = async (passkey: string) => {
         try {
-            if(answer == true){
-                await invoke("delete_pw", {id: id});
-            }
-        } catch(e) {
-            console.log("Something went wrong: " + e)
-        }
-    }
-
-    const copyPass = async (p: string) => {
-        try {
-            await invoke("decrypt_str", {encrypted: p}).then((res) => navigator.clipboard.writeText(res as string));
+            await invoke("decrypt_str", {encrypted: passkey}).then((res) => navigator.clipboard.writeText(res as string));
             setCopied(true)
             setTimeout(() => {
                 setCopied(false)
@@ -121,9 +122,9 @@ export default function DataDetail({id, username, url, password, favorite, editM
         </aside>
         <section className='action-buttons' ref={buttonContainer}>
             <button style={{backgroundColor: theme.button, color: theme.textColor}} type="button" onClick={viewIt}>{viewing ? <BiHide/> : <BiShow/>}</button>
-            <button ref={copyRef} style={{backgroundColor: copied ? "#8fe038" : theme.button, color: copied ? "#22ad15" : theme.textColor}} type="button" onClick={() => copyPass(password)}>{copied ? <BiCheck/> : <BiLink/>}</button>
-            <button className="favorite" ref={faveRef} style={{backgroundColor: theme.button, color: theme.textColor}} type="button" onClick={updateFave}><BiStar/></button>   
-            <button className='delete' style={{display: editMode ? "block" : "none"}} type="button" onClick={deletePass}><GiPaperBagCrumpled/></button>    
+            <button data-testid="copy-paste-bttn" ref={copyRef} style={{backgroundColor: copied ? "#8fe038" : theme.button, color: copied ? "#22ad15" : theme.textColor}} type="button" onClick={() => copyPass(password)}>{copied ? <BiCheck/> : <BiLink/>}</button>
+            <button className="favorite" data-testid="favorite-bttn" ref={faveRef} style={{backgroundColor: theme.button, color: theme.textColor}} type="button" onClick={updateFave}><BiStar/></button>   
+            <button className='delete' data-testid="delete-bttn" style={{display: editMode ? "block" : "none"}} type="button" onClick={() => deletePass(id)}><GiPaperBagCrumpled/></button>    
         </section>
     </article>
   )

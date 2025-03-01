@@ -24,6 +24,7 @@ struct FilePath {
     path: String
 }
 
+// Data transfer object for adding new password.
 #[derive(Debug, Serialize, Deserialize)]
 struct PassDTO {
     username: String,
@@ -32,6 +33,7 @@ struct PassDTO {
     favorite: i32,
 }
 
+// struct meant for reading contents of user's CSV file.
 #[derive(Debug, Deserialize)]
 struct PassCSV {
     url: String,
@@ -41,8 +43,6 @@ struct PassCSV {
 
 #[tauri::command]
 fn fetchdata(handle: tauri::AppHandle) -> Result<Vec<PassData>, String> {
-    // let conn = Connection::open("F:\\rdesktop\\pass-man\\userdata.db3").unwrap();
-    // File::open("/data\\userdata.db3").expect("Could not open or create file.");
     let resolver = handle.path().resolve("data/userdata.db3", tauri::path::BaseDirectory::Resource).expect("could not find file.");
     File::open(&resolver).expect("Could not open / create folder: ");
     let conn = Connection::open(&resolver).expect("Could not establish a connection.");
@@ -73,7 +73,6 @@ fn fetchdata(handle: tauri::AppHandle) -> Result<Vec<PassData>, String> {
 
 #[tauri::command]
 fn favorite_pw(id: i32, fave: i32, handle: tauri::AppHandle) -> Result<String, String> {
-    // let conn = Connection::open("F:\\rdesktop\\pass-man\\userdata.db3").expect("Could not connect to Database.");
 
     let resolver = handle.path().resolve("data/userdata.db3", tauri::path::BaseDirectory::Resource).expect("could not find file.");
     let conn = Connection::open(resolver).expect("Could not establish a connection.");
@@ -91,8 +90,6 @@ fn favorite_pw(id: i32, fave: i32, handle: tauri::AppHandle) -> Result<String, S
 
 #[tauri::command]
 fn add_pw(data: PassDTO, handle: tauri::AppHandle) -> Result<String, String> {
-    // let conn = Connection::open("F:\\rdesktop\\pass-man\\userdata.db3").unwrap();
-
     let resolver = handle.path().resolve("data/userdata.db3", tauri::path::BaseDirectory::Resource).expect("could not find file.");
     let conn = Connection::open(resolver).expect("Could not establish a connection.");
 
@@ -109,11 +106,8 @@ fn add_pw(data: PassDTO, handle: tauri::AppHandle) -> Result<String, String> {
 
 #[tauri::command]
 fn delete_pw(id: i32, handle: tauri::AppHandle) -> Result<String, String> {
-    // let conn = Connection::open("F:\\rdesktop\\pass-man\\userdata.db3").unwrap();
-
     let resolver = handle.path().resolve("data/userdata.db3", tauri::path::BaseDirectory::Resource).expect("could not find file.");
     let conn = Connection::open(resolver).expect("Could not establish a connection.");
-
 
     let query = conn.execute(
         "DELETE FROM userdata WHERE id = :id",
@@ -187,8 +181,6 @@ fn decrypt_str(encrypted: String) -> Result<String, String> {
 }
 
 fn main() {
-    // let conn = Connection::open("F:\\rdesktop\\pass-man\\userdata.db3").unwrap();
-    //app_lib::run();
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_fs::init())

@@ -7,6 +7,9 @@
   "compilerOptions": {
     "lib": [
       "ES2022.String"
+    ],
+    "types": [
+      "vitest/globals"
     ]
   }
 }

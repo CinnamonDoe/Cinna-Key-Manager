@@ -1,6 +1,6 @@
 import { BaseDirectory, writeTextFile } from "@tauri-apps/plugin-fs";
 import { useContext, useRef, useState } from "react"
-import { ThemesContext } from "../App";
+import { ThemesContext } from "../../App";
 
 const themeOptions = ["Skylight", "New Moon", "Lavender Lilac", "Deep Sea"]
 
