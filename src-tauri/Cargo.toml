@@ -1,6 +1,6 @@
 [package]
 name = "cinna-key-manager"
-version = "1.0.1"
+version = "1.0.3"
 description = "This stores your passwords blazingly fast."
 authors = ["CinnamonDoe"]
 license = "Apache"

@@ -5,7 +5,7 @@ use std::fs::File;
 
 use csv::{self, Reader};
 use magic_crypt::{new_magic_crypt, MagicCryptTrait};
-use rusqlite::{self, named_params, Connection};
+use rusqlite::{self, named_params, Connection, OpenFlags};
 use serde::{Deserialize, Serialize};
 use tauri::{self, Manager};
 
@@ -75,7 +75,7 @@ fn fetchdata(handle: tauri::AppHandle) -> Result<Vec<PassData>, String> {
 fn favorite_pw(id: i32, fave: i32, handle: tauri::AppHandle) -> Result<String, String> {
 
     let resolver = handle.path().resolve("data/userdata.db3", tauri::path::BaseDirectory::Resource).expect("could not find file.");
-    let conn = Connection::open(resolver).expect("Could not establish a connection.");
+    let conn = Connection::open_with_flags(resolver, OpenFlags::SQLITE_OPEN_READ_WRITE).expect("Could not establish a connection.");
 
     let query = conn.execute(
         "UPDATE userdata SET favorite = :fave WHERE id = :id",
@@ -91,7 +91,7 @@ fn favorite_pw(id: i32, fave: i32, handle: tauri::AppHandle) -> Result<String, S
 #[tauri::command]
 fn add_pw(data: PassDTO, handle: tauri::AppHandle) -> Result<String, String> {
     let resolver = handle.path().resolve("data/userdata.db3", tauri::path::BaseDirectory::Resource).expect("could not find file.");
-    let conn = Connection::open(resolver).expect("Could not establish a connection.");
+    let conn = Connection::open_with_flags(resolver, OpenFlags::SQLITE_OPEN_READ_WRITE).expect("Could not establish a connection.");
 
     let query = conn.execute(
         "INSERT INTO userdata (user_name, password, favorite, url) VALUES (?1, ?2, ?3, ?4)",
@@ -107,7 +107,7 @@ fn add_pw(data: PassDTO, handle: tauri::AppHandle) -> Result<String, String> {
 #[tauri::command]
 fn delete_pw(id: i32, handle: tauri::AppHandle) -> Result<String, String> {
     let resolver = handle.path().resolve("data/userdata.db3", tauri::path::BaseDirectory::Resource).expect("could not find file.");
-    let conn = Connection::open(resolver).expect("Could not establish a connection.");
+    let conn = Connection::open_with_flags(resolver, OpenFlags::SQLITE_OPEN_READ_WRITE).expect("Could not establish a connection.");
 
     let query = conn.execute(
         "DELETE FROM userdata WHERE id = :id",

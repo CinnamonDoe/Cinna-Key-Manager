@@ -162,7 +162,7 @@ function App() {
             </section>
           </section>
         </section>
-        <p className='version'>v.1.0.1</p>
+        <p className='version'>v.1.0.3</p>
       </ThemesContext.Provider>
     </>
   )

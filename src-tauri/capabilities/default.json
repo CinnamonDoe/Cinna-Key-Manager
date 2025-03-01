@@ -10,6 +10,10 @@
     "fs:default",
     "fs:allow-app-write",
     "fs:allow-app-read",
+    "fs:allow-write-file",
+    "fs:allow-read-file",
+    "fs:allow-read-text-file",
+    "fs:allow-write-text-file",
     "fs:allow-resource-read-recursive",
     {
       "identifier": "fs:allow-exists",

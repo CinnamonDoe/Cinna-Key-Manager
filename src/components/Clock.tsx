@@ -5,8 +5,8 @@ export default function Clock() {
 
   const showTime = () => {
     const date = new Date();
-    const timeStr = date.toLocaleTimeString();
-    setTime(timeStr.substring(0,4)+ " " +timeStr.substring(8,11));
+    const timeStr = date.toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'});
+    setTime(timeStr);
   }
 
   useEffect(() => {

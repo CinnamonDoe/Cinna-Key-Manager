@@ -34,8 +34,7 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ],
-    "resources": [
-      "./data/userdata.db3"
-    ]
+    "resources": 
+      ["./data/userdata.db3"]
   }
 }
